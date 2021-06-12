@@ -1,12 +1,12 @@
 #include <ESP8266WiFi.h>        // Include the Wi-Fi library
-#include <ESP8266Ping.h>
+#include <ESP8266Ping.h>        //Include the ESP8266Ping
 int relayPin = D1;
 unsigned long int sleepTime= 600000000;
-const char* ssid     = "Pollinibash";         // The SSID (name) of the Wi-Fi network you want to connect to
-const char* password = "Pass=w0rd";
+const char* ssid     = "";         // Enter the SSID
+const char* password = "";         // Enter Passowrd; Leave it blank for open SSID
 void setup() {
   pinMode(relayPin,OUTPUT);
-  Serial.begin(115200);         // Start the Serial communication to send messages to the computer
+  Serial.begin(115200);         // Start the Serial communication
   delay(10);
   Serial.println('\n');
   WiFi.begin(ssid, password);             // Connect to the network
@@ -16,7 +16,7 @@ void setup() {
   int i = 0;
   while (WiFi.status() != WL_CONNECTED) {// Wait for the Wi-Fi to connect
     delay(1000);
-    Serial.print(++i); Serial.print(' ');
+    Serial.print(++i); Serial.print(' '); //Keep printing a number until wifi connects
   }
 
   Serial.println('\n');
@@ -26,11 +26,11 @@ void setup() {
 }
 
 void loop() { 
-  bool pingGoogle= Ping.ping("www.google.com");
-  bool pingfb= Ping.ping("www.facebook.com");
-  bool pingyahoo=Ping.ping("www.yahoo.com");
-  int avg_time= Ping.averageTime();
-  Serial.print("Average Time: ");
+  bool pingGoogle= Ping.ping("www.google.com"); //ping google
+  bool pingfb= Ping.ping("www.facebook.com");  //ping facebook
+  bool pingyahoo=Ping.ping("www.yahoo.com");   //ping yahoo
+  int avg_time= Ping.averageTime(); 
+  Serial.print("Average Time: ");            //prints the average ping time
   Serial.print(avg_time);
   Serial.print("ms");
   
@@ -44,11 +44,11 @@ void loop() {
     Serial.println("\nInternet is not okay");
     Serial.println("\n . . . . . . . . .");
     digitalWrite(relayPin,HIGH);
-    delay(3000);
+    delay(3000); //wait three second
     digitalWrite(relayPin,LOW);
   }
   
   delay(1000);
   Serial.print("zzzzzz....");
-  ESP.deepSleep(sleepTime);
+  ESP.deepSleep(sleepTime); //goes to sleep for 10 minutes
  }
